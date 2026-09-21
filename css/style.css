@@ -26,3 +26,15 @@
 @keyframes fieldRise{from{transform:translateY(50vh);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes bloom{from{transform:translateX(-50%) scale(.05) rotate(-25deg);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}@keyframes sway{0%,100%{rotate:-2deg}50%{rotate:3deg}}@keyframes appear{to{opacity:1;transform:translateY(0)}}@keyframes firefly{0%,100%{transform:translate(0,0);opacity:.1}35%{transform:translate(30px,-90px);opacity:1}70%{transform:translate(-25px,-150px);opacity:.35}}@keyframes float{50%{transform:translateY(-12px)}}
 @media(max-width:650px){.floating-message{top:9vh}.lily{width:95px}.lily-1,.lily-7{display:none}.lily-2{left:2%}.lily-3{left:20%}.lily-4{left:40%}.lily-5{right:18%}.lily-6{right:0}.bloom{scale:.8}.floating-message h1{font-size:2rem}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+/* Detalle orgánico de flores: pétalos, hojas y crecimiento escalonado */
+.bloom i:nth-child(6){transform:rotate(45deg) translateY(-8px) scale(.72);background:linear-gradient(#efffff,#8ffff7 60%,#36c9dc)}
+.bloom i:nth-child(7){transform:rotate(165deg) translateY(-8px) scale(.72);background:linear-gradient(#efffff,#8ffff7 60%,#36c9dc)}
+.bloom i:nth-child(8){transform:rotate(285deg) translateY(-8px) scale(.72);background:linear-gradient(#efffff,#8ffff7 60%,#36c9dc)}
+.bloom .inner{position:absolute;left:46px;top:43px;width:12px;height:12px;border-radius:50%;background:#fffbd0;box-shadow:0 0 12px 5px #b9fff0,0 0 30px 8px rgba(78,255,225,.45);z-index:4}
+.leaf.c{bottom:51%;left:48%;width:42px;height:92px;transform:rotate(58deg);opacity:.85}
+.leaf.d{bottom:61%;left:52%;width:38px;height:82px;transform:scaleX(-1) rotate(52deg);opacity:.8}
+.lily:before,.lily:after{content:"";position:absolute;bottom:5%;width:3px;height:48%;background:linear-gradient(transparent,#39d88d);border-radius:50%;opacity:.45}
+.lily:before{left:35%;transform:rotate(-9deg)}.lily:after{right:31%;transform:rotate(10deg)}
+.lily-1 .bloom{animation-delay:1.9s}.lily-2 .bloom{animation-delay:1.45s}.lily-3 .bloom{animation-delay:2.05s}.lily-4 .bloom{animation-delay:1.1s}.lily-5 .bloom{animation-delay:1.75s}.lily-6 .bloom{animation-delay:1.35s}.lily-7 .bloom{animation-delay:2.15s}
+.lily-1 .stem,.lily-1 .leaf,.lily-2 .stem,.lily-2 .leaf,.lily-3 .stem,.lily-3 .leaf,.lily-4 .stem,.lily-4 .leaf,.lily-5 .stem,.lily-5 .leaf,.lily-6 .stem,.lily-6 .leaf,.lily-7 .stem,.lily-7 .leaf{animation:growPart 2.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes growPart{from{transform-origin:bottom;scale:1 0;opacity:0}to{opacity:1}}
