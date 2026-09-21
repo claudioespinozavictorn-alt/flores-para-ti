@@ -10,6 +10,8 @@
 </head>
 
 <body class="container">
+    <div id="yt-player" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+    <button id="musicToggle" type="button" aria-label="Pausar o reproducir música" style="position:fixed;right:18px;top:18px;z-index:9999;width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(6px)">🎵</button>
     
     <div class="night"></div>
     <div class="flowers">
@@ -274,5 +276,61 @@
       </div>
     </div>
     <script src="main.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let musicPlayer;
+      let musicStarted = false;
+      const musicButton = document.getElementById("musicToggle");
+
+      function onYouTubeIframeAPIReady() {
+        musicPlayer = new YT.Player("yt-player", {
+          height: "1",
+          width: "1",
+          videoId: "T5LUuqGiig8",
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            loop: 1,
+            playlist: "T5LUuqGiig8",
+            playsinline: 1
+          },
+          events: {
+            onReady: function (event) {
+              event.target.setVolume(45);
+              event.target.playVideo();
+            },
+            onStateChange: function (event) {
+              if (event.data === YT.PlayerState.PLAYING) {
+                musicStarted = true;
+                musicButton.textContent = "⏸";
+              }
+            }
+          }
+        });
+      }
+
+      function startMusic() {
+        if (musicPlayer && musicPlayer.playVideo) {
+          musicPlayer.playVideo();
+          musicStarted = true;
+          musicButton.textContent = "⏸";
+        }
+      }
+
+      musicButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        if (!musicPlayer) return;
+        if (musicPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+          musicPlayer.pauseVideo();
+          musicButton.textContent = "🎵";
+        } else {
+          startMusic();
+        }
+      });
+
+      document.addEventListener("click", function () {
+        if (!musicStarted) startMusic();
+      }, { once: true });
+    </script>
   </body>
 </html>
