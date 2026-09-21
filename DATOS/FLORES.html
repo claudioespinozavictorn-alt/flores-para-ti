@@ -278,46 +278,29 @@
     </div>
     <script src="main.js"></script>
     <script>
-let ctx, timer, started=false, paused=false;
-const btn=document.getElementById("musicToggle");
-const progression=[
-  [261.63,329.63,392.00,493.88],
-  [220.00,261.63,329.63,392.00],
-  [174.61,220.00,261.63,349.23],
-  [196.00,246.94,293.66,392.00]
-];
-const melody=[659.25,587.33,523.25,493.88,440,493.88,523.25,659.25,783.99,659.25,587.33,523.25,493.88,440,392,440];
-let beat=0;
-function voice(freq,when,dur,type,vol){
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.type=type;o.frequency.setValueAtTime(freq,when);
-  g.gain.setValueAtTime(0,when);
-  g.gain.linearRampToValueAtTime(vol,when+.08);
-  g.gain.exponentialRampToValueAtTime(.0001,when+dur);
-  o.connect(g);g.connect(ctx.destination);o.start(when);o.stop(when+dur+.05);
-}
-function tick(){
-  if(!ctx||paused)return;
-  const now=ctx.currentTime+.03, chord=progression[Math.floor(beat/4)%progression.length];
-  if(beat%4===0){
-    chord.forEach((n,i)=>voice(n/2,now,2.9,i===0?"sine":"triangle",i===0?.022:.010));
-  }
-  voice(melody[beat%melody.length],now,.75,"sine",.028);
-  if(beat%2===1) voice(melody[(beat+2)%melody.length]/2,now+.18,.9,"triangle",.009);
-  beat++;
-}
-function startMusic(){
-  if(started)return;
-  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
-  ctx=new AC();started=true;paused=false;tick();timer=setInterval(tick,620);btn.textContent="⏸";
-}
+const musicButton=document.getElementById("musicToggle");
+let player, playing=true;
+const yt=document.createElement("div");
+yt.id="yt-romantic-player";
+yt.style.cssText="position:fixed;width:1px;height:1px;left:-9999px;top:-9999px;overflow:hidden";
+document.body.appendChild(yt);
+window.onYouTubeIframeAPIReady=function(){
+  player=new YT.Player("yt-romantic-player",{
+    videoId:"BbNc92e-rhU",
+    playerVars:{autoplay:1,start:13,controls:0,loop:1,playlist:"BbNc92e-rhU"},
+    events:{onReady:e=>{e.target.setVolume(55);e.target.playVideo();musicButton.textContent="⏸";}}
+  });
+};
+const api=document.createElement("script");
+api.src="https://www.youtube.com/iframe_api";
+document.head.appendChild(api);
 function toggleMusic(){
-  if(!started){startMusic();return;}
-  paused=!paused;
-  if(paused){ctx.suspend();btn.textContent="🎵";}else{ctx.resume();btn.textContent="⏸";}
+ if(!player||!player.getPlayerState)return;
+ if(player.getPlayerState()===YT.PlayerState.PLAYING){player.pauseVideo();musicButton.textContent="🎵";}
+ else{player.playVideo();musicButton.textContent="⏸";}
 }
-btn.addEventListener("click",e=>{e.stopPropagation();toggleMusic();});
-document.addEventListener("pointerdown",()=>startMusic(),{once:true});
+musicButton.addEventListener("click",e=>{e.stopPropagation();toggleMusic();});
+document.addEventListener("pointerdown",()=>{if(player&&player.playVideo)player.playVideo();},{once:true});
 </script>
   </body>
 </html>
