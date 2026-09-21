@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Flores para ti</title>
+</head>
+<body class="flores-page">
+  <main class="scene">
+    <div class="stars" aria-hidden="true"></div>
+    <section class="message-card">
+      <p class="eyebrow">ESPECIALMENTE PARA TI</p>
+      <h1>Para la señorita más bonita del mundo mundial 💖🌷</h1>
+      <p class="dedication">Estas flores son especialmente para ti 💐✨ Porque alguien tan bonita merece un pequeño jardín que le recuerde lo especial que es. ♡</p>
+      <button id="surprise" class="btn">TOCA AQUÍ ✨</button>
+      <p id="secret" class="secret">Que nunca te falten motivos para sonreír, señorita bonita 💖</p>
+      <a class="back" href="index.html">← Volver</a>
+    </section>
+    <div class="garden" aria-hidden="true">
+      <div class="flower f1"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f2"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f3"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f4"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f5"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f6"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f7"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f8"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <div class="flower f9"><i></i><i></i><i></i><i></i><i></i><b></b><em></em></div>
+      <span class="firefly l1"></span>
+      <span class="firefly l2"></span>
+      <span class="firefly l3"></span>
+      <span class="firefly l4"></span>
+      <span class="firefly l5"></span>
+      <span class="firefly l6"></span>
+      <span class="firefly l7"></span>
+      <span class="firefly l8"></span>
+    </div>
+  </main>
+<script>
+const button=document.getElementById('surprise');
+const secret=document.getElementById('secret');
+button.addEventListener('click',()=>{
+  secret.classList.toggle('show');
+  button.textContent=secret.classList.contains('show')?'PARA TI 💐':'TOCA AQUÍ ✨';
+  for(let i=0;i<24;i++){
+    const h=document.createElement('span');
+    h.className='heart'; h.textContent=['♡','♥','✦'][i%3];
+    h.style.left=(45+Math.random()*10)+'%';
+    h.style.top='48%';
+    h.style.setProperty('--x',(Math.random()*500-250)+'px');
+    h.style.setProperty('--y',(-100-Math.random()*400)+'px');
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2200);
+  }
+});
+</script>
+</body>
+</html>
