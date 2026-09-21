@@ -1,33 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css"><title>Flores para ti 🌷</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="0; url=DATOS/FLORES.html">
+<title>Flores para ti</title>
+<script>location.replace("DATOS/FLORES.html");</script>
 </head>
-<body class="flores-page">
-<main class="flower-night">
-<div class="night-sky"></div>
-<div id="yt-player" class="music-player" aria-hidden="true"></div>
-<button id="musicToggle" class="music-toggle" type="button">🎵</button>
-<section class="floating-message">
-<p>PARA TI ♡</p>
-<h1>Para la señorita más bonita<br>del mundo mundial 💖</h1>
-<div class="type-line" id="typeLine"></div>
-</section>
-<div class="flower-field" aria-hidden="true">
-<div class="lily lily-1"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-2"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-3"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-4"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-5"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-6"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div><div class="lily lily-7"><span class="stem"></span><span class="leaf a"></span><span class="leaf b"></span><span class="leaf c"></span><span class="leaf d"></span><div class="bloom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><span class="inner"></span></div></div>
-<span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span><span class="glow g4"></span><span class="glow g5"></span><span class="glow g6"></span><span class="glow g7"></span><span class="glow g8"></span><span class="glow g9"></span><span class="glow g10"></span><span class="glow g11"></span><span class="glow g12"></span><span class="glow g13"></span><span class="glow g14"></span><span class="glow g15"></span><span class="glow g16"></span><span class="glow g17"></span><span class="glow g18"></span><span class="glow g19"></span><span class="glow g20"></span><span class="glow g21"></span><span class="glow g22"></span><span class="glow g23"></span><span class="glow g24"></span>
-</div>
-<a class="night-back" href="index.html">←</a>
-</main>
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-let player,started=false;
-function onYouTubeIframeAPIReady(){player=new YT.Player('yt-player',{height:'1',width:'1',videoId:'T5LUuqGiig8',playerVars:{controls:0,loop:1,playlist:'T5LUuqGiig8',playsinline:1}})}
-const music=document.getElementById('musicToggle');
-function playMusic(){if(player&&player.playVideo){player.playVideo();started=true;music.textContent='⏸';}}
-music.onclick=e=>{e.stopPropagation();if(!player)return;player.getPlayerState()===1?(player.pauseVideo(),music.textContent='🎵'):playMusic()};
-document.addEventListener('click',()=>{if(!started)playMusic()},{once:true});
-const msg='Estas flores son especialmente para ti ✨';
-let n=0;function type(){if(n<msg.length){document.getElementById('typeLine').textContent+=msg[n++];setTimeout(type,65)}}setTimeout(type,1800);
-</script></body></html>
+<body style="background:#000;color:#fff;font-family:sans-serif">
+<a href="DATOS/FLORES.html" style="color:#fff">Abrir flores</a>
+</body>
+</html>
