@@ -14,6 +14,7 @@
     <button id="musicToggle" type="button" aria-label="Pausar o reproducir música" style="position:fixed;right:18px;top:18px;z-index:9999;width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(6px)">🎵</button>
     
     <div class="night"></div>
+    <div class="dedication">Para la señorita más bonita del mundo mundial 💖🌷</div>
     <div class="flowers">
       <div class="flower flower--1">
         <div class="flower__leafs flower__leafs--1">
@@ -277,56 +278,46 @@
     </div>
     <script src="main.js"></script>
     <script>
-let romanticAudio, romanticTimer, musicStarted=false;
-const musicButton=document.getElementById("musicToggle");
-
-function startRomanticMusic(){
-  if(musicStarted) return;
-  const AC=window.AudioContext||window.webkitAudioContext;
-  if(!AC) return;
-  romanticAudio=new AC();
-  const master=romanticAudio.createGain();
-  master.gain.value=.10;
-  master.connect(romanticAudio.destination);
-
-  // Melodía romántica original, suave y sin archivos externos.
-  const melody=[261.63,329.63,392,523.25,493.88,392,329.63,293.66,
-                261.63,349.23,440,523.25,493.88,440,392,329.63];
-  let step=0;
-  function note(){
-    const now=romanticAudio.currentTime;
-    const osc=romanticAudio.createOscillator();
-    const gain=romanticAudio.createGain();
-    osc.type="sine";
-    osc.frequency.value=melody[step%melody.length];
-    gain.gain.setValueAtTime(0,now);
-    gain.gain.linearRampToValueAtTime(.34,now+.08);
-    gain.gain.exponentialRampToValueAtTime(.001,now+1.35);
-    osc.connect(gain); gain.connect(master);
-    osc.start(now); osc.stop(now+1.4);
-    if(step%4===0){
-      const bass=romanticAudio.createOscillator(), bg=romanticAudio.createGain();
-      bass.type="sine"; bass.frequency.value=melody[step%melody.length]/2;
-      bg.gain.setValueAtTime(.13,now); bg.gain.exponentialRampToValueAtTime(.001,now+2.6);
-      bass.connect(bg); bg.connect(master); bass.start(now); bass.stop(now+2.7);
-    }
-    step++;
+let ctx, timer, started=false, paused=false;
+const btn=document.getElementById("musicToggle");
+const progression=[
+  [261.63,329.63,392.00,493.88],
+  [220.00,261.63,329.63,392.00],
+  [174.61,220.00,261.63,349.23],
+  [196.00,246.94,293.66,392.00]
+];
+const melody=[659.25,587.33,523.25,493.88,440,493.88,523.25,659.25,783.99,659.25,587.33,523.25,493.88,440,392,440];
+let beat=0;
+function voice(freq,when,dur,type,vol){
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.type=type;o.frequency.setValueAtTime(freq,when);
+  g.gain.setValueAtTime(0,when);
+  g.gain.linearRampToValueAtTime(vol,when+.08);
+  g.gain.exponentialRampToValueAtTime(.0001,when+dur);
+  o.connect(g);g.connect(ctx.destination);o.start(when);o.stop(when+dur+.05);
+}
+function tick(){
+  if(!ctx||paused)return;
+  const now=ctx.currentTime+.03, chord=progression[Math.floor(beat/4)%progression.length];
+  if(beat%4===0){
+    chord.forEach((n,i)=>voice(n/2,now,2.9,i===0?"sine":"triangle",i===0?.022:.010));
   }
-  note();
-  romanticTimer=setInterval(note,700);
-  musicStarted=true;
-  musicButton.textContent="⏸";
+  voice(melody[beat%melody.length],now,.75,"sine",.028);
+  if(beat%2===1) voice(melody[(beat+2)%melody.length]/2,now+.18,.9,"triangle",.009);
+  beat++;
 }
-function pauseRomanticMusic(){
-  if(romanticAudio && romanticAudio.state==="running"){
-    romanticAudio.suspend(); musicButton.textContent="🎵";
-  }else if(romanticAudio){
-    romanticAudio.resume(); musicButton.textContent="⏸";
-  }else startRomanticMusic();
+function startMusic(){
+  if(started)return;
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  ctx=new AC();started=true;paused=false;tick();timer=setInterval(tick,620);btn.textContent="⏸";
 }
-musicButton.addEventListener("click",e=>{e.stopPropagation();pauseRomanticMusic();});
-document.addEventListener("click",()=>startRomanticMusic(),{once:true});
-window.addEventListener("load",()=>startRomanticMusic());
+function toggleMusic(){
+  if(!started){startMusic();return;}
+  paused=!paused;
+  if(paused){ctx.suspend();btn.textContent="🎵";}else{ctx.resume();btn.textContent="⏸";}
+}
+btn.addEventListener("click",e=>{e.stopPropagation();toggleMusic();});
+document.addEventListener("pointerdown",()=>startMusic(),{once:true});
 </script>
   </body>
 </html>
